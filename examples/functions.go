@@ -99,11 +99,44 @@ func main() {
 	// Get account general information
 	data, err := client.GetAccountInfo("JWT TOKEN HERE")
 
-	fmt.Println("[SENDED]\tLoggout account sended with success")
+	fmt.Println("[SENDED]\tGet all information of account  sended with success")
 	if data != "" {
-		fmt.Printf("[GET RESPONSE API] \t %v", data)
+		fmt.Printf("[GET RESPONSE API] \t %v\n", data)
 	}
 	if err != nil {
-		fmt.Printf("[ERROR] \terror to loggout your account: %v\n", err)
+		fmt.Printf("[ERROR] \terror of try get information of account: %v\n", err)
+	}
+
+	// Get account fees
+	data, err = client.GetAccountFees("JWT TOKEN HERE")
+
+	fmt.Println("[SENDED]\tGet account fees with success")
+	if data != "" {
+		fmt.Printf("[GET RESPONSE API] \t %v\n", data)
+	}
+	if err != nil {
+		fmt.Printf("[ERROR] \terror get the fees of account: %v\n", err)
+	}
+
+	// Get account general information
+	data, err = client.GetAccountBalance("JWT TOKEN HERE")
+
+	fmt.Println("[SENDED]\tGet the balance of account sended with success")
+	if data != "" {
+		fmt.Printf("[GET RESPONSE API] \t %v\n", data)
+	}
+	if err != nil {
+		fmt.Printf("[ERROR] \terror to get balance of your account: %v\n", err)
+	}
+
+	// Get account general information
+	data, err = client.GetAccountLimit("JWT TOKEN HERE")
+
+	fmt.Println("[SENDED]\tGet the information of limit account sended with success")
+	if data != "" {
+		fmt.Printf("[GET RESPONSE API] \t %v\n", data)
+	}
+	if err != nil {
+		fmt.Printf("[ERROR] \terror to get the limit of your account: %v\n", err)
 	}
 }

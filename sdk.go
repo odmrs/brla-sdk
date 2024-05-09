@@ -140,3 +140,31 @@ func (c *Client) GetAccountInfo(token string) (string, error) {
 
 	return string(responseBody), nil
 }
+
+func (c *Client) GetAccountLimit(token string) (string, error) {
+	url := c.BaseURL + getAccount
+	responseBody, err := requests.SendRequestGet(url, token)
+	if err != nil {
+		return "", err
+	}
+
+	return string(responseBody), nil
+}
+func (c *Client) GetAccountBalance(token string) (string, error) {
+	url := c.BaseURL + getAccount
+	responseBody, err := requests.SendRequestGet(url, token)
+	if err != nil {
+		return "", err
+	}
+
+	return string(responseBody), nil
+}
+func (c *Client) GetAccountFees(token string) (string, error) {
+	url := c.BaseURL + getAccount
+	responseBody, err := requests.SendRequestGet(url, token)
+	if err != nil {
+		return "", err
+	}
+
+	return string(responseBody), nil
+}
