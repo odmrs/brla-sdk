@@ -4,7 +4,7 @@ This repository contains the UNOFFICIAL SDK for BRLA Digital, allowing developer
 
 ## API Documentation
 
-For more details on how to use the official API, consult the official documentation available on the official [BRLA Digital](https://brla-account-api.readme.io/reference/welcome) website. For the sdk documentation, keep reading this repository.
+For more details on how to use the official API, consult the official documentation available on the official [BRLA Digital](https://brla-account-api.readme.io/reference/welcome) website. For the SDK documentation, keep reading this repository.
 
 ## Installation
 
