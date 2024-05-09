@@ -94,4 +94,16 @@ func main() {
 		fmt.Printf("[ERROR] \terror to loggout your account: %v\n", err)
 	}
 
+	// Get funtions
+
+	// Get account general information
+	data, err := client.GetAccountInfo("JWT TOKEN HERE")
+
+	fmt.Println("[SENDED]\tLoggout account sended with success")
+	if data != "" {
+		fmt.Printf("[GET RESPONSE API] \t %v", data)
+	}
+	if err != nil {
+		fmt.Printf("[ERROR] \terror to loggout your account: %v\n", err)
+	}
 }

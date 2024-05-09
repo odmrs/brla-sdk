@@ -15,6 +15,12 @@ const (
 	concludesResetPassword    string = "/v1/business/reset-password/"
 	changePassword            string = "/v1/business/change-password"
 	loggoutAccount            string = "/v1/business/logout"
+
+	// Get endpoints
+	getAccount     string = "/v1/business/info"
+	accountFees    string = "/v1/business/fees"
+	accountBalance string = "/v1/business/balance"
+	accountLimit   string = "/v1/business/used-limit"
 )
 
 type Client struct {
@@ -121,4 +127,16 @@ func (c *Client) LoggoutAccount(token string) error {
 	}
 
 	return nil
+}
+
+// Get functions
+
+func (c *Client) GetAccountInfo(token string) (string, error) {
+	url := c.BaseURL + getAccount
+	responseBody, err := requests.SendRequestGet(url, token)
+	if err != nil {
+		return "", err
+	}
+
+	return string(responseBody), nil
 }
