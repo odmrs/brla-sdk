@@ -43,36 +43,45 @@ func main() {
 	// Send the request
 	err := client.CreateAccount(account)
 	if err != nil {
-		fmt.Printf("Failed to create account, error:\n\t%v", err)
+		fmt.Printf("[ERROR] \tfailed to create account, error:\n\t%v", err)
 		return
 	}
-	fmt.Println("\tAccount creation successful")
+	fmt.Println("[SENDED]\tAccount creation successful")
 
 	// Validate account
 	err = client.ValidateAccount("email@example.com", "token")
 	if err != nil {
-		fmt.Printf("error validate creating account: %v\n", err)
+		fmt.Printf("[ERROR] \terror validate creating account: %v\n", err)
 	}
-	fmt.Println("\tValidate Account sended with success")
+	fmt.Println("[SENDED]\tValidate Account sended with success")
 
 	// Authenticates with login and password
 	err = client.AuthLoginPassword("email@example.com", "password")
 	if err != nil {
-		fmt.Printf("error validate authenticates account: %v\n", err)
+		fmt.Printf("[ERROR] \terror validate authenticates account: %v\n", err)
 	}
-	fmt.Println("\tAuthentication sended with success")
+	fmt.Println("[SENDED]\tAuthentication sended with success")
 
 	// Reset password
 	err = client.ResetPassword("email@example.com")
 	if err != nil {
-		fmt.Printf("error reset password: %v\n", err)
+		fmt.Printf("[ERROR] \terror reset password: %v\n", err)
 	}
-	fmt.Println("\tReset password sended with success")
+	fmt.Println("[SENDED]\tReset password sended with success")
 
 	// Concludes password reset process
 	err = client.ConcludesResetPassword("tokenblablabla", "email@gmail.com")
 	if err != nil {
-		fmt.Printf("error concludes reset password: %v\n", err)
+		fmt.Printf("[ERROR] \terror concludes reset password: %v\n", err)
 	}
-	fmt.Println("\tConcludes password sended with success")
+	fmt.Println("[SENDED]\tConcludes password sended with success")
+
+	// Change account password
+	err = client.ChangePassword("currentPassword", "newpassword", "newpassword", "blablabla")
+
+	fmt.Println("[SENDED]\tChange password sended with success")
+
+	if err != nil {
+		fmt.Printf("[ERROR] \terror to change your account password: %v\n", err)
+	}
 }
