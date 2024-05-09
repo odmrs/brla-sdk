@@ -1,7 +1,6 @@
 package sdk
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/odmrs/brla-sdk/models"
@@ -14,6 +13,7 @@ const (
 	authLoginPasswordEndpoint string = "/v1/business/login"
 	resetPassword             string = "/v1/business/forgot-password"
 	concludesResetPassword    string = "/v1/business/reset-password/"
+	changePassword            string = "/v1/business/change-password"
 )
 
 type Client struct {
@@ -27,9 +27,9 @@ func NewClient(baseURL string) *Client {
 func (c *Client) CreateAccount(account *models.Account) error {
 	url := c.BaseURL + createEndpoint
 
-	err := requests.SendRequest(url, account, http.MethodPost)
+	err := requests.SendRequest(url, account, http.MethodPost, nil)
 	if err != nil {
-		return fmt.Errorf("HTTP request failed: %v", err)
+		return err
 	}
 
 	return nil
@@ -42,10 +42,10 @@ func (c *Client) ValidateAccount(email, token string) error {
 		"token": token,
 	}
 
-	err := requests.SendRequest(url, reqBody, http.MethodPatch)
+	err := requests.SendRequest(url, reqBody, http.MethodPatch, nil)
 
 	if err != nil {
-		return fmt.Errorf("HTTP request failed: %v", err)
+		return err
 	}
 	return nil
 }
@@ -57,10 +57,10 @@ func (c *Client) AuthLoginPassword(email, password string) error {
 		"password": password,
 	}
 
-	err := requests.SendRequest(url, reqBody, http.MethodPost)
+	err := requests.SendRequest(url, reqBody, http.MethodPost, nil)
 
 	if err != nil {
-		return fmt.Errorf("HTTP request failed: %v", err)
+		return err
 	}
 	return nil
 }
@@ -71,10 +71,10 @@ func (c *Client) ResetPassword(email string) error {
 		"email": email,
 	}
 
-	err := requests.SendRequest(url, reqBody, http.MethodPost)
+	err := requests.SendRequest(url, reqBody, http.MethodPost, nil)
 
 	if err != nil {
-		return fmt.Errorf("HTTP request failed: %v", err)
+		return err
 	}
 
 	return nil
@@ -86,9 +86,25 @@ func (c *Client) ConcludesResetPassword(token, email string) error {
 		"email": email,
 	}
 
-	err := requests.SendRequest(url, reqBody, http.MethodPatch)
+	err := requests.SendRequest(url, reqBody, http.MethodPatch, nil)
 	if err != nil {
-		return fmt.Errorf("HTTP request failed: %v", err)
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) ChangePassword(currentPassword, newPassword, newPasswordConfirm, token string) error {
+	url := c.BaseURL + changePassword
+	reqBody := map[string]string{
+		"currentPassword":    currentPassword,
+		"newPassword":        newPassword,
+		"newPasswordConfirm": newPasswordConfirm,
+	}
+
+	err := requests.SendRequest(url, reqBody, http.MethodPatch, token)
+	if err != nil {
+		return err
 	}
 
 	return nil

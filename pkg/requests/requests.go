@@ -8,11 +8,8 @@ import (
 	"net/http"
 )
 
-type ApiError struct {
-	Message string `json:"error"`
-}
+func SendRequest(url string, data interface{}, httpMethod string, bearer interface{}) error {
 
-func SendRequest(url string, data interface{}, httpMethod string) error {
 	jsonBody, err := json.Marshal(data)
 	if err != nil {
 		return fmt.Errorf("failed to marshal account data: %v", err)
@@ -25,7 +22,12 @@ func SendRequest(url string, data interface{}, httpMethod string) error {
 		return fmt.Errorf("HTTP request failed: %v", err)
 	}
 
-	req.Header.Set("Content-Type", "application/json")
+	if bearer != nil {
+		var tokenBearer string = "Bearer " + bearer.(string)
+		req.Header.Add("authorization", tokenBearer)
+	}
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("content-type", "application/json")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -40,12 +42,7 @@ func SendRequest(url string, data interface{}, httpMethod string) error {
 		return fmt.Errorf("failed to read response body: %v", err)
 	}
 	if len(body) != 0 {
-		var apiErr ApiError
-		if err := json.Unmarshal(body, &apiErr); err != nil {
-			return fmt.Errorf("failed to unmarshal error response: %v", err)
-		}
-
-		return fmt.Errorf("API error: %s", apiErr.Message)
+		return fmt.Errorf("\n\t\t\tAPI error: %s", string(body))
 	}
 
 	return nil
