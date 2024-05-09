@@ -54,7 +54,7 @@ func (c *Client) CreateAccount(account *models.Account) error {
 			return fmt.Errorf("failed to unmarshal error response: %v", err)
 		}
 
-		return fmt.Errorf("API error: %s\n", apiErr.Message)
+		return fmt.Errorf("API error: %s", apiErr.Message)
 	}
 
 	return nil
