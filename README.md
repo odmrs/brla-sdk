@@ -55,6 +55,8 @@ func main() {
 
 	err := client.CreateAccount(account)
 
-	.... handler the erros here ....
+	// .... handler the erros here ....
 }
 ```
+
+For more examples access [here](https://github.com/odmrs/brla-sdk/blob/main/examples/functions.go)
