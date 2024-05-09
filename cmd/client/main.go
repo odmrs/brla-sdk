@@ -48,4 +48,10 @@ func main() {
 	}
 
 	fmt.Println("Account creation successful")
+
+	// Validate account
+	err = client.ValidateAccount("email@example.com", "token")
+	if err != nil {
+		fmt.Printf("error validate creating account: %v", err)
+	}
 }
