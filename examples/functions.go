@@ -46,12 +46,26 @@ func main() {
 		fmt.Printf("Failed to create account, error:\n\t%v", err)
 		return
 	}
-
-	fmt.Println("Account creation successful")
+	fmt.Println("\tAccount creation successful")
 
 	// Validate account
 	err = client.ValidateAccount("email@example.com", "token")
 	if err != nil {
-		fmt.Printf("error validate creating account: %v", err)
+		fmt.Printf("error validate creating account: %v\n", err)
 	}
+	fmt.Println("\tValidate Account sended with success")
+
+	// Authenticates with login and password
+	err = client.AuthLoginPassword("email@example.com", "password")
+	if err != nil {
+		fmt.Printf("error validate authenticates account: %v\n", err)
+	}
+	fmt.Println("\tAuthentication sended with success")
+
+	// Reset password
+	err = client.ResetPassword("email@example.com")
+	if err != nil {
+		fmt.Printf("error reset password: %v\n", err)
+	}
+	fmt.Println("\tReset password sended with success")
 }
