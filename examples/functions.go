@@ -84,4 +84,14 @@ func main() {
 	if err != nil {
 		fmt.Printf("[ERROR] \terror to change your account password: %v\n", err)
 	}
+
+	// Logs account out
+	err = client.LoggoutAccount("JWT TOKEN HERE")
+
+	fmt.Println("[SENDED]\tLoggout account sended with success")
+
+	if err != nil {
+		fmt.Printf("[ERROR] \terror to loggout your account: %v\n", err)
+	}
+
 }

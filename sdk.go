@@ -14,6 +14,7 @@ const (
 	resetPassword             string = "/v1/business/forgot-password"
 	concludesResetPassword    string = "/v1/business/reset-password/"
 	changePassword            string = "/v1/business/change-password"
+	loggoutAccount            string = "/v1/business/logout"
 )
 
 type Client struct {
@@ -103,6 +104,18 @@ func (c *Client) ChangePassword(currentPassword, newPassword, newPasswordConfirm
 	}
 
 	err := requests.SendRequest(url, reqBody, http.MethodPatch, token)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) LoggoutAccount(token string) error {
+	url := c.BaseURL + loggoutAccount
+	reqBody := "empty"
+
+	err := requests.SendRequest(url, reqBody, http.MethodPost, nil)
 	if err != nil {
 		return err
 	}

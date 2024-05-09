@@ -35,7 +35,7 @@ func TestCreateAccount(t *testing.T) {
 	)
 	err := client.CreateAccount(account)
 	if err != nil {
-		t.Skipf("error creating account: %v", err)
+		t.Errorf("error creating account: %v", err)
 	}
 }
 
@@ -43,6 +43,6 @@ func TestValidateAccount(t *testing.T) {
 	client := NewClient(sandbox)
 	err := client.ValidateAccount("email@example.com", "token")
 	if err != nil {
-		t.Skipf("error validate creating account: %v", err)
+		t.Errorf("error validate creating account: %v", err)
 	}
 }
