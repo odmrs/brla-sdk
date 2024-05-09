@@ -13,6 +13,7 @@ const (
 	concludesCreationEndpoint string = "/v1/business/validate"
 	authLoginPasswordEndpoint string = "/v1/business/login"
 	resetPassword             string = "/v1/business/forgot-password"
+	concludesResetPassword    string = "/v1/business/reset-password/"
 )
 
 type Client struct {
@@ -72,6 +73,20 @@ func (c *Client) ResetPassword(email string) error {
 
 	err := requests.SendRequest(url, reqBody, http.MethodPost)
 
+	if err != nil {
+		return fmt.Errorf("HTTP request failed: %v", err)
+	}
+
+	return nil
+}
+
+func (c *Client) ConcludesResetPassword(token, email string) error {
+	url := c.BaseURL + concludesResetPassword + token
+	reqBody := map[string]string{
+		"email": email,
+	}
+
+	err := requests.SendRequest(url, reqBody, http.MethodPatch)
 	if err != nil {
 		return fmt.Errorf("HTTP request failed: %v", err)
 	}

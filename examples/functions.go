@@ -68,4 +68,11 @@ func main() {
 		fmt.Printf("error reset password: %v\n", err)
 	}
 	fmt.Println("\tReset password sended with success")
+
+	// Concludes password reset process
+	err = client.ConcludesResetPassword("tokenblablabla", "email@gmail.com")
+	if err != nil {
+		fmt.Printf("error concludes reset password: %v\n", err)
+	}
+	fmt.Println("\tConcludes password sended with success")
 }
