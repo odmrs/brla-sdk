@@ -33,13 +33,13 @@ func main() {
 	// Prepare the requires to create account
 	account := models.NewAccounta(
 		"email@example.com",	// EMAIL
-		"your-password",	   	// PASSWORD
-		"your-password",	    // CONFIRM PASSWORD
-		"99999999999",			// NUMBER
-		"CPF",					// TAXIDTYPE 
-		"BRLA Digital",  		// BRLA Digital
-		"999.999.999-99", 	    // CPF 
-		"2004-jan-02", 			// Birth Day
+		"your-password",	// PASSWORD
+		"your-password",	// CONFIRM PASSWORD
+		"99999999999",		// NUMBER
+		"CPF",			// TAXIDTYPE 
+		"BRLA Digital",  	// BRLA Digital
+		"999.999.999-99", 	// CPF 
+		"2004-jan-02", 		// Birth Day
 		models.Address{
 			Cep:        "cep",
 			City:       "city",
