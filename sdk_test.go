@@ -3,11 +3,11 @@ package sdk
 import (
 	"testing"
 
-	"github.com/odmrs/brla-sdk/pkg/models"
+	"github.com/odmrs/brla-sdk/models"
 )
 
 const (
-	sandbox string = "https://api.brla.digital:4567"
+	sandbox string = "https://api.brla.digital:4566"
 )
 
 func TestCreateAccount(t *testing.T) {
@@ -24,13 +24,13 @@ func TestCreateAccount(t *testing.T) {
 
 	account := models.NewAccount(
 		"test.test@example.com",
-		"password123",
-		"password123",
-		"9999999999999",
+		"password122",
+		"password122",
+		"9999999999998",
 		"CPF",
 		"Testing Name",
-		"479.280.460-40",
-		"2004-jan-02",
+		"478.280.460-40",
+		"2003-jan-02",
 		address,
 	)
 

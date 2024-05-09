@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/odmrs/brla-sdk/pkg/models"
-	"github.com/odmrs/brla-sdk/pkg/sdk"
+	sdk "github.com/odmrs/brla-sdk"
+	"github.com/odmrs/brla-sdk/models"
 )
 
 const (

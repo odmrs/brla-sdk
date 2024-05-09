@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/odmrs/brla-sdk/pkg/models"
+	"github.com/odmrs/brla-sdk/models"
 )
 
 type ApiError struct {

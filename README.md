@@ -18,8 +18,8 @@ example of creating a new account:
 
 ```go
 import (
-	"github.com/odmrs/brla-sdk/pkg/models"
-	"github.com/odmrs/brla-sdk/pkg/sdk"
+	"github.com/odmrs/brla-sdk/models"
+	sdk "github.com/odmrs/brla-sdk"
 )
 
 const (
