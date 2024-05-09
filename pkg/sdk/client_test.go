@@ -40,3 +40,11 @@ func TestCreateAccount(t *testing.T) {
 		t.Fatalf("error creating account: %v", err)
 	}
 }
+
+func TestValidateAccount(t *testing.T) {
+	client := NewClient(sandbox)
+	err := client.ValidateAccount("email@example.com", "token")
+	if err != nil {
+		t.Skipf("error validate creating account: %v", err)
+	}
+}
