@@ -59,4 +59,4 @@ func main() {
 }
 ```
 
-For more examples access [here](https://github.com/odmrs/brla-sdk/blob/main/examples/functions.go)
+For more examples access [here](https://github.com/odmrs/brla-sdk/tree/main/examples)
