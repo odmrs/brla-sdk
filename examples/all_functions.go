@@ -8,10 +8,10 @@ import (
 )
 
 const (
-	// Sandbox Environment
+	// sandbox environment
 	sandbox string = "https://api.brla.digital:4567"
 
-	// Production Environment
+	// production environment
 	// production string = "https://api.brla.digital:5567"
 )
 
@@ -40,7 +40,6 @@ func main() {
 		},
 	)
 
-	// Send the request
 	err := client.CreateAccount(account)
 	if err != nil {
 		fmt.Printf("[ERROR] \tfailed to create account, error:\n\t%v", err)
@@ -118,7 +117,7 @@ func main() {
 		fmt.Printf("[ERROR] \terror get the fees of account: %v\n", err)
 	}
 
-	// Get account general information
+	// Get account balance information
 	data, err = client.GetAccountBalance("JWT TOKEN HERE")
 
 	fmt.Println("[SENDED]\tGet the balance of account sended with success")
@@ -129,7 +128,7 @@ func main() {
 		fmt.Printf("[ERROR] \terror to get balance of your account: %v\n", err)
 	}
 
-	// Get account general information
+	// Get account limit information
 	data, err = client.GetAccountLimit("JWT TOKEN HERE")
 
 	fmt.Println("[SENDED]\tGet the information of limit account sended with success")
