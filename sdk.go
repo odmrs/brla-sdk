@@ -56,7 +56,7 @@ func NewClient(baseURL string) *Client {
 func (c *Client) CreateAccount(account *models.Account) error {
 	url := c.BaseURL + createEndpoint
 
-	_, err := requests.SendRequest(url, account, http.MethodPost, nil)
+	_, err := requests.SendRequest(url, account, http.MethodPost, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func (c *Client) ValidateAccount(email string) error {
 		"token": token,
 	}
 
-	_, err := requests.SendRequest(url, reqBody, http.MethodPatch, nil)
+	_, err := requests.SendRequest(url, reqBody, http.MethodPatch, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -89,7 +89,7 @@ func (c *Client) AuthLoginPassword(email, password string) (string, error) {
 		"password": password,
 	}
 
-	token, err := requests.SendRequest(url, reqBody, http.MethodPost, nil)
+	token, err := requests.SendRequest(url, reqBody, http.MethodPost, nil, nil)
 	if err != nil {
 		return "", err
 	}
@@ -102,7 +102,7 @@ func (c *Client) ResetPassword(email string) error {
 		"email": email,
 	}
 
-	_, err := requests.SendRequest(url, reqBody, http.MethodPost, nil)
+	_, err := requests.SendRequest(url, reqBody, http.MethodPost, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -116,7 +116,7 @@ func (c *Client) ConcludesResetPassword(token, email string) error {
 		"email": email,
 	}
 
-	_, err := requests.SendRequest(url, reqBody, http.MethodPatch, nil)
+	_, err := requests.SendRequest(url, reqBody, http.MethodPatch, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func (c *Client) ChangePassword(
 		"newPasswordConfirm": newPasswordConfirm,
 	}
 
-	_, err := requests.SendRequest(url, reqBody, http.MethodPatch, token)
+	_, err := requests.SendRequest(url, reqBody, http.MethodPatch, token, nil)
 	if err != nil {
 		return err
 	}
@@ -146,7 +146,7 @@ func (c *Client) LoggoutAccount(token string) error {
 	url := c.BaseURL + loggoutAccount
 	reqBody := "empty"
 
-	_, err := requests.SendRequest(url, reqBody, http.MethodPost, nil)
+	_, err := requests.SendRequest(url, reqBody, http.MethodPost, nil, nil)
 	if err != nil {
 		return err
 	}
@@ -199,7 +199,7 @@ func (c *Client) GetAccountFees(token string) (string, error) {
 func (c *Client) GeneratePaymantSandbox(token string) error {
 	url := c.BaseURL + payInSandbox
 
-	_, err := requests.SendRequest(url, "", http.MethodPost, token)
+	_, err := requests.SendRequest(url, "", http.MethodPost, token, nil)
 	if err != nil {
 		return err
 	}
@@ -240,7 +240,7 @@ func (c *Client) CreatePayoutOrder(
 		"accountType":    accountType,
 	}
 
-	id, err := requests.SendRequest(url, reqBody, http.MethodPost, token)
+	id, err := requests.SendRequest(url, reqBody, http.MethodPost, token, nil)
 	if err != nil {
 		return "", err
 	}
@@ -290,7 +290,7 @@ func (c *Client) RegisterWebhook(token string) (string, error) {
 		"url": webhookUrl,
 	}
 
-	webhookId, err := requests.SendRequest(url, reqBody, http.MethodPost, token)
+	webhookId, err := requests.SendRequest(url, reqBody, http.MethodPost, token, nil)
 	if err != nil {
 		return "", err
 	}
@@ -337,7 +337,7 @@ func (c *Client) ConvertBetweenCurrencies(
 		"makupAddress":    markupAddress,
 	}
 
-	id, err := requests.SendRequest(url, reqBody, http.MethodPost, tokenJWT)
+	id, err := requests.SendRequest(url, reqBody, http.MethodPost, tokenJWT, nil)
 	if err != nil {
 		return "", err
 	}
