@@ -1,6 +1,8 @@
 package sdk
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -9,6 +11,7 @@ import (
 )
 
 const (
+	// BRLA ACCOUNT ENDPOINTS
 	createEndpoint            string = "/v1/business/create"
 	concludesCreationEndpoint string = "/v1/business/validate"
 	authLoginPasswordEndpoint string = "/v1/business/login"
@@ -16,7 +19,6 @@ const (
 	concludesResetPassword    string = "/v1/business/reset-password/"
 	changePassword            string = "/v1/business/change-password"
 	loggoutAccount            string = "/v1/business/logout"
-
 	// Get endpoints
 	getAccount     string = "/v1/business/info"
 	accountFees    string = "/v1/business/fees"
@@ -27,6 +29,13 @@ const (
 	generatePix      string = "/v1/business/pay-in/br-code"
 	payInSandbox     string = "/v1/business/mock-pix-pay-in"
 	showHistoryPayin string = "/v1/business/pay-in/pix/history"
+
+	// Pay out endpoints
+	createPayoutOrder string = "/v1/business/pay-out"
+	payoutHistory     string = "/v1/business/pay-out/history"
+
+	// Webhooks
+	registerWebhook string = "/v1/business/webhooks"
 )
 
 type Client struct {
@@ -198,7 +207,53 @@ func (c *Client) ShowHistoryPayIn(token string) (string, error) {
 		return "", err
 	}
 
-	return string(responseBody), nil
+	var prettyJson bytes.Buffer
+	if err := json.Indent(&prettyJson, responseBody, "", " "); err != nil {
+		return "", fmt.Errorf("failed to format JSON: %v", err)
+	}
+
+	return prettyJson.String(), nil
+}
+
+func (c *Client) CreatePayoutOrder(
+	token, pixKey, taxId, referenceLabel, name, ispb, branchCode, accountNumber, accountType string,
+	amount int,
+) (string, error) {
+	url := c.BaseURL + createPayoutOrder
+
+	reqBody := map[string]interface{}{
+		"pixKey":         pixKey,
+		"taxId":          taxId,
+		"amount":         amount,
+		"referenceLabel": referenceLabel,
+		"name":           name,
+		"ispb":           ispb,
+		"branchCode":     branchCode,
+		"accountNumber":  accountNumber,
+		"accountType":    accountType,
+	}
+
+	id, err := requests.SendRequest(url, reqBody, http.MethodPost, token)
+	if err != nil {
+		return "", err
+	}
+
+	return id, nil
+}
+
+func (c *Client) ShowPayoutHistory(token string) (string, error) {
+	url := c.BaseURL + payoutHistory
+	responseBody, err := requests.SendRequestGet(url, nil, token)
+	if err != nil {
+		return "", err
+	}
+
+	var prettyJson bytes.Buffer
+	if err := json.Indent(&prettyJson, responseBody, "", " "); err != nil {
+		return "", fmt.Errorf("failed to format JSON: %v", err)
+	}
+
+	return prettyJson.String(), nil
 }
 
 func (c *Client) GeneratesPayinCode(token, amount, referenceLabel, id string) (string, error) {
@@ -215,4 +270,23 @@ func (c *Client) GeneratesPayinCode(token, amount, referenceLabel, id string) (s
 	}
 
 	return string(responseBody), nil
+}
+
+func (c *Client) RegisterWebhook(token string) (string, error) {
+	var webhookUrl string
+	url := c.BaseURL + registerWebhook
+
+	fmt.Print("Enter link of your webhook: ")
+	fmt.Scan(&webhookUrl)
+	fmt.Printf("your link: %v\n", webhookUrl)
+	reqBody := map[string]string{
+		"url": webhookUrl,
+	}
+
+	webhookId, err := requests.SendRequest(url, reqBody, http.MethodPost, token)
+	if err != nil {
+		return "", err
+	}
+
+	return webhookId, err
 }

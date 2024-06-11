@@ -56,6 +56,12 @@ func SendRequest(
 			if pix, ok := responseMap["brCode"].(string); ok {
 				return pix, nil
 			}
+			if id, ok := responseMap["id"].(string); ok {
+				return id, nil
+			}
+			if webhookId, ok := responseMap["webhookId"].(string); ok {
+				return webhookId, nil
+			}
 		}
 		return "", fmt.Errorf("\n\t\t\tAPI error: %s", string(body))
 	}
@@ -73,7 +79,7 @@ func SendRequestGet(
 		return nil, fmt.Errorf("error to parse URL: %v", err)
 	}
 
-	if queryParams != nil && len(queryParams) > 0 {
+	if len(queryParams) > 0 {
 		params := url.Values{}
 		for key, value := range queryParams {
 			params.Add(key, value)

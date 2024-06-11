@@ -30,14 +30,12 @@ func main() {
 				},
 			)
 
-
-
 				  err := client.CreateAccount(account)
 					if err != nil {
 						fmt.Printf("[ERROR] \tfailed to create account, error:\n\t%v", err)
 						return
 					}
-					fmt.Println("[SENDED]\tAccount creation successful")
+					fmt.Println("[SENDED] \tAccount creation successful")
 
 		err := client.ValidateAccount("omarcosviniciusdev@gmail.com")
 		if err != nil {
@@ -45,7 +43,7 @@ func main() {
 			return
 		}
 
-		fmt.Println("[SENDED]\tAccount validated with successful")
+		fmt.Println("[SENDED] \tAccount validated with successful")
 	*/
 
 	// Auth user with login and password -> validate endpoint
@@ -63,7 +61,7 @@ func main() {
 		fmt.Printf("[ERROR] \tfailed to auth the account, error:\n\t%v", err)
 		return
 	}
-	fmt.Println("[SENDED]\tGenerate PIX with successful")
+	fmt.Println("[SENDED] \tGenerate PIX with successful")
 	fmt.Printf("Your pix code: %v\n", pixCode)
 
 	// Generate a fake payment inside sandbox mock
@@ -72,13 +70,13 @@ func main() {
 		fmt.Printf("[ERROR] \tfailed to generate payment on sandbox, error: \n\t%v", err)
 		return
 	}
-	fmt.Println("[SENDED]\tPayment simulated with successful")
+	fmt.Println("[SENDED] \tPayment simulated with successful")
 
 	body, err := client.ShowHistoryPayIn(token)
 	if err != nil {
 		fmt.Printf("[ERROR] \tfailed to show history of payments, error: \n\t%v", err)
 		return
 	}
-	fmt.Println("[SENDED]\tGet all history of payment with successful\n")
-	fmt.Print(body)
+	fmt.Println("[SENDED] \tGet all history of payment with successful")
+	fmt.Printf("Your Payin History: %v", body)
 }
