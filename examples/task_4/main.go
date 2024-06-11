@@ -11,15 +11,15 @@ const sandbox string = "https://api.brla.digital:4567"
 func main() {
 	client := sdk.NewClient(sandbox)
 	// Auth user with login and password -> validate endpoint
-	token, err := client.AuthLoginPassword("omarcosviniciusdev@gmail.com", "SecretBrla")
+	tokenJWT, err := client.AuthLoginPassword("omarcosviniciusdev@gmail.com", "SecretBrla")
 	if err != nil {
 		fmt.Printf("[ERROR] \tfailed to auth the account, error:\n\t%v", err)
 		return
 	}
 	fmt.Println("[SENDED]\tAccount auth with successful")
-	fmt.Printf("Your token: %v\n", token)
+	fmt.Printf("Your token: %v\n", tokenJWT)
 
-	webhookId, err := client.RegisterWebhook(token)
+	webhookId, err := client.RegisterWebhook(tokenJWT)
 	if err != nil {
 		fmt.Printf("[ERROR] \tfailed to register webhook, error:\n\t%v", err)
 		return
