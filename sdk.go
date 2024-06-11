@@ -36,6 +36,13 @@ const (
 
 	// Webhooks
 	registerWebhook string = "/v1/business/webhooks"
+
+	// Quote
+	quoteTokenConversion string = "/v1/business/fast-quote"
+
+	// Convert operation
+	convertCurrencies          string = "/v1/business/swap"
+	historyOfConvertCurrencies string = "/v1/business/swap/history"
 )
 
 type Client struct {
@@ -289,4 +296,66 @@ func (c *Client) RegisterWebhook(token string) (string, error) {
 	}
 
 	return webhookId, err
+}
+
+func (c *Client) QuoteToken(
+	tokenJWT, operation, inputCoin, outputCoin, chain,
+	fixOutPut,
+	amount string,
+) (string, error) {
+	url := c.BaseURL + quoteTokenConversion
+	query := map[string]string{
+		"operation":  operation,
+		"inputCoin":  inputCoin,
+		"outputCoin": outputCoin,
+		"chain":      chain,
+		"fixOutPut":  fixOutPut,
+		"amount":     amount,
+	}
+
+	responseBody, err := requests.SendRequestGet(url, query, tokenJWT)
+	if err != nil {
+		return "", err
+	}
+	var responseMap map[string]interface{}
+	if err := json.Unmarshal(responseBody, &responseMap); err == nil {
+		if quoteToken, ok := responseMap["token"].(string); ok {
+			return quoteToken, nil
+		}
+	}
+	return "", fmt.Errorf("error to get \"TOKEN\" from the request: \n%v\n", string(responseBody))
+}
+
+func (c *Client) ConvertBetweenCurrencies(
+	tokenJWT, quoteToken, receiverAddress, markupAddress string,
+) (string, error) {
+	url := c.BaseURL + convertCurrencies
+
+	reqBody := map[string]interface{}{
+		"token":           quoteToken,
+		"receiverAddress": receiverAddress,
+		"makupAddress":    markupAddress,
+	}
+
+	id, err := requests.SendRequest(url, reqBody, http.MethodPost, tokenJWT)
+	if err != nil {
+		return "", err
+	}
+
+	return id, nil
+}
+
+func (c *Client) HistoryConversionOperations(tokenJWT string) (string, error) {
+	url := c.BaseURL + historyOfConvertCurrencies
+	responseBody, err := requests.SendRequestGet(url, nil, tokenJWT)
+	if err != nil {
+		return "", err
+	}
+
+	var prettyJson bytes.Buffer
+	if err := json.Indent(&prettyJson, responseBody, "", " "); err != nil {
+		return "", fmt.Errorf("failed to format JSON: %v", err)
+	}
+
+	return prettyJson.String(), nil
 }
