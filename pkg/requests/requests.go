@@ -10,11 +10,25 @@ import (
 )
 
 func SendRequest(
-	url string,
+	urlStr string,
 	data interface{},
 	httpMethod string,
 	bearer interface{},
+	queryParams map[string]string,
 ) (string, error) {
+	baseUrl, err := url.Parse(urlStr)
+	if err != nil {
+		return "", fmt.Errorf("error to parse URL: %v", err)
+	}
+
+	if len(queryParams) > 0 {
+		params := url.Values{}
+		for key, value := range queryParams {
+			params.Add(key, value)
+		}
+
+		baseUrl.RawQuery = params.Encode()
+	}
 	jsonBody, err := json.Marshal(data)
 	if err != nil {
 		return "", fmt.Errorf("failed to marshal account data: %v", err)
@@ -22,7 +36,7 @@ func SendRequest(
 
 	bodyRender := bytes.NewReader([]byte(jsonBody))
 
-	req, err := http.NewRequest(httpMethod, url, bodyRender)
+	req, err := http.NewRequest(httpMethod, baseUrl.String(), bodyRender)
 	if err != nil {
 		return "", fmt.Errorf("HTTP request failed: %v", err)
 	}
