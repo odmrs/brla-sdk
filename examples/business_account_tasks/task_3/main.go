@@ -28,7 +28,7 @@ func main() {
 		"0001",
 		"123456789",
 		"CACC",
-		80,
+		8000,
 	)
 	if err != nil {
 		fmt.Printf("[ERROR] \tfailed to create payout order, error:\n\t%v", err)
