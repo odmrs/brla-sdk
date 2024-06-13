@@ -43,7 +43,7 @@ func main() {
 
 	timestamp := time.Now().UnixMilli()
 	requestMethod := http.MethodPost
-	endpointPath := "/v1/superuser/buy/static-pix?taxId=12345678900"
+	endpointPath := "/v1/superuser/buy/static-pix?taxId=126.966.870-64"
 	apiURL := "https://api.brla.digital:4567"
 
 	bodyData, _ := json.Marshal(struct {

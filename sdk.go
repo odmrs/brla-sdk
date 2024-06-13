@@ -13,7 +13,7 @@ import (
 const (
 	// BRLA ACCOUNT ENDPOINTS
 	createEndpoint            string = "/v1/business/create"
-	concludesCreationEndpoint string = "/v1/business/validate"
+	concludesCreationEndpoint string = "/v1/superuser/validate"
 	authLoginPasswordEndpoint string = "/v1/business/login"
 	resetPassword             string = "/v1/business/forgot-password"
 	concludesResetPassword    string = "/v1/business/reset-password/"
@@ -35,7 +35,7 @@ const (
 	payoutHistory     string = "/v1/business/pay-out/history"
 
 	// Webhooks
-	registerWebhook string = "/v1/business/webhooks"
+	registerWebhook string = "/v1/superuser/webhooks"
 
 	// Quote
 	quoteTokenConversion string = "/v1/business/fast-quote"
